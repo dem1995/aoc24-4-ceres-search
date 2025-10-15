@@ -203,14 +203,37 @@ def find_string_crossings_in_grid(
 
 
 def main():
-    puzzle_input = read_input(Path("put_puzzle_input_here.txt"))
-    substring_matches = list(find_string_locations_in_grid("XMAS", puzzle_input))
-    print(len(substring_matches))
+    from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 
-    xcrossing_substring_matches = list(
-        find_string_crossings_in_grid("MAS", puzzle_input)
+    parser = ArgumentParser(
+        description=(
+            "Finds the number of substrings and x-crossings in the grid for the given puzzle inputs."
+        ),
+        formatter_class=ArgumentDefaultsHelpFormatter,
     )
-    print(len(xcrossing_substring_matches))
+    parser.add_argument(
+        "--part1_input",
+        type=str,
+        default="put_puzzle_part_1_input_here.txt",
+        help="Path to the puzzle input for part 1 (# substrings within grid).",
+    )
+    parser.add_argument(
+        "--part2_input",
+        type=str,
+        default="put_puzzle_part_2_input_here.txt",
+        help="Path to the puzzle input for part 2 (# x-crossings within grid).",
+    )
+    args = parser.parse_args()
+
+    puzzle_1_input = read_input(Path(args.part1_input))
+    substring_matches = list(find_string_locations_in_grid("XMAS", puzzle_1_input))
+    print(f"Part 1: {len(substring_matches)} substring matches for XMAS found")
+
+    puzzle_2_input = read_input(Path(args.part2_input))
+    xcrossing_substring_matches = list(
+        find_string_crossings_in_grid("MAS", puzzle_2_input)
+    )
+    print(f"Part 2: {len(xcrossing_substring_matches)} x-crossings for MAS found")
 
 
 __all__ = [
